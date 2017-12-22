@@ -1,0 +1,39 @@
+{
+  "name": "streambuffer17",
+  "version": "1.0.0",
+  "description": "A writable stream that allows for replaying, seeking and slicing of the streamed content.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha || exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freund17/streambuffer17.git"
+  },
+  "keywords": [
+    "stream",
+    "replay",
+    "buffer",
+    "slice",
+    "seek"
+  ],
+  "author": "freund17",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/freund17/streambuffer17/issues"
+  },
+  "homepage": "https://github.com/freund17/streambuffer17#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.13.1",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-mocha": "^4.11.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "istanbul": "^1.1.0-alpha.1",
+    "mocha": "^4.0.1",
+    "opn-cli": "^3.1.0"
+  }
+}
