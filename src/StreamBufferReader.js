@@ -1,5 +1,8 @@
 const { Readable } = require('stream')
 
+/**
+ * Helper to allow reading from the StreamBuffer as a stream
+ */
 class StreamBufferReader extends Readable {
   constructor (streamCache, startPos, endPos, options) {
     super(options)

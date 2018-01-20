@@ -140,17 +140,15 @@ class StreamBuffer extends Writable {
     return chunk.chunk.slice(offset - chunk.start, end - chunk.start)
   }
 
-  async getBuffer (length, offset) {
-    if (typeof length === 'undefined') {
-      length = null
-    }
-
+  /**
+   * Creates new Buffer from a slice of the stream
+   * @param {number|null} [length] length of the buffer or 'null' for 'read to end'
+   * @param {number|null} [offset] offset relative to the start of the stream or 'null' for current seek
+   * @returns {Promise<Buffer>} requested buffer
+   */
+  async getBuffer (length = null, offset = null) {
     if (length === null) {
       length = Infinity
-    }
-
-    if (typeof offset === 'undefined') {
-      offset = null
     }
 
     if (offset === null) {
@@ -193,17 +191,16 @@ class StreamBuffer extends Writable {
     return Buffer.concat(chunks, currentPos - offset)
   }
 
-  getStream (length, offset, options) {
-    if (typeof length === 'undefined') {
-      length = null
-    }
-
+  /**
+   * Creates a new ReadableStream from a slice of this stream
+   * @param {number|null} [length] length of the stream or 'null' for 'read to end'
+   * @param {number|null} [offset] offset relative to the start of the stream or 'null' for current seek
+   * @param {Object} [options] additional options to pass to the returned readable stream instance
+   * @returns {ReadableStream} requested stream
+   */
+  getStream (length = null, offset = null, options) {
     if (length === null) {
       length = Infinity
-    }
-
-    if (typeof offset === 'undefined') {
-      offset = null
     }
 
     if (offset === null) {
@@ -230,6 +227,11 @@ class StreamBuffer extends Writable {
     return new StreamBufferReader(this, offset, endPos, options)
   }
 
+  /**
+   * Gets or sets the current seek
+   * @param {number|null} [newSeek] offset relative to the start of the stream or 'null' for 'end of stream'
+   * @returns {number|null} current seek or 'null' if the seek is set to the end of the stream and is jet unknown
+   */
   seek (newSeek) {
     if (typeof newSeek !== 'undefined') {
       if (newSeek === Infinity) {
@@ -246,6 +248,10 @@ class StreamBuffer extends Writable {
     return this._seek
   }
 
+  /**
+   * Gets the current size of the StreamBuffer
+   * @returns {number} current size of the StreamBuffer
+   */
   size () {
     if (this._chunks.length === 0) {
       return 0
