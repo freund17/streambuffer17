@@ -78,17 +78,30 @@ describe('StreamBuffer', function () {
 
   it('emits "resize"-event', async function () {
     const stream = await createOpenTestStream()
-    let pResolve
     const promise = new Promise(resolve => {
-      pResolve = resolve
+      stream.once('resize', resolve)
     })
-
-    stream.once('resize', pResolve)
 
     await writePromised(stream, Buffer.from([ 0x00, 0x11, 0x22, 0x33 ]))
     await endPromised(stream)
 
     await promise
+  })
+
+  it('emits "resize"-event containing size and oldSize', async function () {
+    const stream = await createOpenTestStream()
+    const promise = new Promise(resolve => {
+      stream.once('resize', resolve)
+    })
+
+    const oldSize = stream.size()
+    await writePromised(stream, Buffer.from([ 0x00, 0x11, 0x22, 0x33 ]))
+    await endPromised(stream)
+    const size = stream.size()
+
+    const event = await promise
+    assert.strictEqual(event.size, size)
+    assert.strictEqual(event.oldSize, oldSize)
   })
 
   it('replays data being written to it as buffer', async function () {
